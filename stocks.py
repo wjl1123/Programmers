@@ -22,34 +22,61 @@ prices	return
 5초 시점의 ₩3은 0초간 가격이 떨어지지 않았습니다.
 
 """
-
-from collections import deque
-
 prices = [1,2,3,2,3]
 
-def check_up_down(deque):
+def check_up_down(stock):
     sec_list = []
+    length = len(stock)
+    for i in range(length):
+        sec = 0
+        for j in range(i, length):
+            print(f'j({j}) - i({i}) :: {stock[j]} - {stock[i]} = {stock[j]-stock[i]}')
+            print(f'sec is {sec}')
+            print(j == (length-1))
 
-    for i in deque:
-        sec = -1
-        for j in deque:
-            print(j - i)
-            if ((j - i) >= 0):
-                print('act')
+            if (stock[j] - stock[i]) >= 0 and j != (length-1):
                 sec += 1
-            elif sec == -1 and ((j - i) < 0):
+                print('add sec')
+
+            elif sec == -1 and ((stock[j] - stock[i]) < 0):
+                print(sec == -1 and ((stock[j] - stock[i]) < 0))
                 sec_list.append(0)
+                print('add 0')
                 break
-            else:
+
+            elif j == (length-1) or (stock[j] - stock[i]) < 0:
                 sec_list.append(sec)
+                print(f'add sec :: {sec}\n')
                 break
+
+            elif j == (length-1):
+                sec_list.append(0)
+                print('add 0')
+                break
+
+            else:
+                print('do nothing')
+                pass
+        print('\n')
 
     return sec_list
 
 
 def solution(prices):
-    prices = deque(prices)
-
     answer = check_up_down(prices)
-    print(prices)
+    print(answer)
+    return answer
+
+solution(prices)
+
+
+def solution(prices):
+    answer = [0] * len(prices)
+    for i in range(len(prices)):
+        for j in range(i+1, len(prices)):
+            if prices[i] <= prices[j]:
+                answer[i] += 1
+            else:
+                answer[i] += 1
+                break
     return answer
