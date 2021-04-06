@@ -90,26 +90,40 @@ def solution(progresses, speeds):
 
     print(days)
 
-    ans = Fin(days)
     answer = []
+    days = deque(days)
 
-    for i, d in enumerate(days):
-        print(ans.done)
-        print(f'd    is {d}')
-        ans.add(d, i)
-        print(ans.done)
-        if ans.done:
-            print('act')
-            print(ans.done)
-            answer.append(len(ans.done))
-            ans.done = []
-            print(ans.done)
-            print(answer)
-            print('\n')
+    while days:
+        max = days[0]
+        for i, n in enumerate(days):
+            if max > n:
+                for j, m in enumerate(days):
+                    if max < m and j != 0:
+                        remember = j
+                        print(remember)
+                        break
+                    else:
+                        remember = len(days)
+                else:
+                    continue
+                break
+            else:
+                if i != 0:
+                    max = n
+                for j, m in enumerate(days):
+                    if max < m and j != 0:
+                        remember = j
+                        break
+                    else:
+                        remember = len(days)
+                else:
+                    continue
+                break
 
+        answer.append(remember)
 
-    print(f'\n{days}')
-    print(answer)
+        for i in range(remember):
+            days.popleft()
 
     return answer
 
