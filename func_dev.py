@@ -43,38 +43,13 @@ speeds2 = [1, 1, 1, 1, 1, 1]
 
 #예제 1)
 progresses3 = [40, 93, 30, 55, 60, 65]
-speeds3 = [60, 1, 30, 5 , 10, 7]
+speeds3 = [60, 1, 30, 5 ,  7]
 #return : [1,2,3]
 #[1, 7, 3, 9, 4, 5]
 #예제 2)
 progresses4 = [93, 30, 55, 60, 40, 65]
 speeds4 = [1, 30, 5 , 10, 60, 7]
 #return : [2,4]
-
-class Fin:
-    def __init__(self, days):
-        self.max = 0
-        self.ans = []
-        self.done = []
-        self.days = days
-
-    def add(self, day, index):
-        if day > self.max:
-            self.max = day
-            self.done = self.ans
-            self.ans = []
-            self.ans.append(day)
-            print(f'done is {self.done}')
-        elif index == len(self.days)-1:
-            self.ans.append(day)
-            self.done = self.ans
-        else:
-            self.ans.append(day)
-        print(f'max  is {self.max}\n')
-
-    def if_done(self):
-        if self.done:
-            return True
 
 def solution(progresses, speeds):
     prog = deque(progresses)
