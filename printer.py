@@ -44,7 +44,7 @@ priorities	   location	  return
 """
 
 priorities = [2, 1, 3, 2, 2]
-location = 2
+location = 4
 
 priorities3 = [3, 1, 2, 1]
 location3 = 1
@@ -57,58 +57,44 @@ location2 = 0
 from collections import deque
 
 def solution(priorities, location):
-    combined_list = [(b, a) for a, b in enumerate(priorities)]
+    printed = [0]*len(priorities)
+    idx = 0
+    num = 1
 
-    priorities = deque(sorted(priorities, reverse=True))
-
-    priorities = priorities
-
-    combined_list = deque(combined_list)
-    print(combined_list)
-
-    answer_list = []
-    count = 0
-    while combined_list:
-        breakpoint()
-        for a in list(combined_list):
-            breakpoint()
-            max = priorities[0]
-            min = priorities[-1]
-            breakpoint()
-            if max != min:
-                for b in combined_list:
-                    print(b)
-                    if max == b[0]:
-                        breakpoint()
-                        index = b[1]
-                        break
-                breakpoint()
-                combined_list.remove((max, index))
-                priorities.popleft()
-                answer_list.append((max, index))
-                breakpoint()
-                print(answer_list)
-            else:
-                breakpoint()
-                index = answer_list[-1][1]
-                first = list(combined_list)[index:]
-                second = list(combined_list)[:index]
-                breakpoint()
-                break
+    while num != len(priorities)+1:
+        if priorities[0] < max(priorities):
+            priorities.append(priorities[0])
+            # 뒤에 넣는다 (우선순위 밀림)
         else:
-            continue
-        break
+            printed[idx%len(printed)] = num
+            print(f' idx : {idx}  len(printed) : {len(printed)}')
+            print(f' idx%len : {idx%len(printed)}  num : {num}')
+            print(priorities)
+            print(printed)
+            print('')
+            num += 1
+            priorities.append(0)
 
-    answer_list += first
-    answer_list += second
-    breakpoint()
-    count = 0
-    for a in answer_list:
-        count += 1
-        if a[1] == location:
-            answer = count
-            breakpoint()
+        del priorities[0]
+        idx += 1
 
-    return answer
+    return printed[location]
+# 우선순위대로 넣기
+# 우선순위 같은게 겹치면 전에 넣은 index + 1 부터 시작
+# 뺀 원소 다음 index 원소 넣기
 
 print(solution(priorities2, location2))
+
+
+
+def solution(priorities, location):
+    queue =  [(i,p) for i,p in enumerate(priorities)]
+    answer = 0
+    while True:
+        cur = queue.pop(0)
+        if any(cur[1] < q[1] for q in queue):
+            queue.append(cur)
+        else:
+            answer += 1
+            if cur[0] == location:
+                return answer
